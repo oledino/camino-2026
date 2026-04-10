@@ -70,13 +70,51 @@
     margin-bottom: 12px;
   }
   .hero h1 em { font-style: italic; color: var(--gold); }
-  .hero-subtitle {
-    font-size: 15px;
-    color: rgba(247,243,236,0.65);
-    max-width: 540px;
-    line-height: 1.7;
-    margin-bottom: 32px;
+  /* ── Route flow (km above arrow) ── */
+  .route-flow {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 0;
+    margin-bottom: 28px;
+    row-gap: 8px;
   }
+  .rf-city {
+    font-size: 13px;
+    font-weight: 600;
+    color: rgba(247,243,236,0.9);
+    white-space: nowrap;
+    line-height: 1;
+    padding-bottom: 2px;
+  }
+  .rf-final {
+    color: var(--gold);
+    font-weight: 700;
+  }
+  .rf-step {
+    display: inline-flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 0 4px;
+    line-height: 1;
+  }
+  .rf-km {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: var(--gold);
+    opacity: 0.75;
+    letter-spacing: 0.3px;
+    white-space: nowrap;
+    margin-bottom: 1px;
+  }
+  .rf-arr {
+    font-size: 12px;
+    color: rgba(247,243,236,0.35);
+    line-height: 1;
+  }
+
+
+  /* ── Hero stats ── */
   .hero-stats {
     display: flex;
     gap: 32px;
@@ -302,7 +340,71 @@
   .icon-email { background: #EBF0FA; color: var(--blue-pt); }
   .icon-cash  { background: #FEF3DC; color: var(--amber); }
 
-  /* Expand toggle */
+  /* 3. km inline in route title */
+  .route-km {
+    font-family: 'DM Mono', monospace;
+    font-size: 13px;
+    font-weight: 700;
+    color: var(--ink-soft);
+    margin-left: 6px;
+    letter-spacing: 0.3px;
+  }
+
+  /* 2. Inline book link next to hotel name */
+  .inline-book {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    font-weight: 600;
+    color: var(--blue-pt);
+    background: var(--blue-pt-light);
+    padding: 2px 8px;
+    border-radius: 4px;
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .inline-book:hover { text-decoration: underline; }
+  .inline-walkin {
+    font-size: 11px;
+    color: #999;
+    font-style: italic;
+  }
+
+  /* 1. Bolder detail text in expanded panel */
+  .detail-value {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.65;
+    color: var(--ink);
+  }
+  .attraction-text {
+    font-size: 14px;
+    font-weight: 500;
+    line-height: 1.7;
+  }
+  .detail-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.7;
+    margin-bottom: 3px;
+  }
+  .detail-value a {
+    color: var(--blue-pt);
+    text-decoration: none;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    background: var(--parchment);
+    border-radius: 6px;
+    font-size: 13px;
+  }
+  .detail-value a:hover { text-decoration: underline; }
+  .detail-value.warn { color: var(--warn); font-weight: 600; }
   .expand-btn {
     background: none; border: none; cursor: pointer;
     color: var(--ink-soft);
@@ -336,29 +438,6 @@
   .day-card.expanded .day-detail { display: grid; }
 
   .detail-block { display: flex; flex-direction: column; gap: 4px; }
-  .detail-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 1.5px;
-    text-transform: uppercase;
-    color: var(--ink-soft);
-    opacity: 0.6;
-  }
-  .detail-value {
-    font-size: 13px;
-    line-height: 1.6;
-    color: var(--ink);
-  }
-  .detail-value a {
-    color: var(--blue-pt);
-    text-decoration: none;
-    font-weight: 500;
-    display: inline-flex;
-    align-items: center;
-    gap: 4px;
-  }
-  .detail-value a:hover { text-decoration: underline; }
-  .detail-value.warn { color: var(--warn); font-weight: 500; }
 
   .backup-tag {
     font-size: 12px;
@@ -387,6 +466,81 @@
     color: var(--ink);
   }
   .attraction-block .detail-label { margin-bottom: 4px; }
+
+  /* ── Route Strip ── */
+  .route-strip {
+    background: var(--ink);
+    padding: 18px 0;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .route-strip::-webkit-scrollbar { display: none; }
+
+  .route-inner {
+    display: flex;
+    align-items: center;
+    padding: 0 32px;
+    min-width: max-content;
+    gap: 0;
+  }
+
+  .route-stop {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+    position: relative;
+  }
+
+  .route-stop-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    border: 2px solid;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+  /* colour per segment */
+  .rdot-porto   { background: var(--rust);        border-color: var(--rust); }
+  .rdot-pt      { background: var(--blue-pt);      border-color: var(--blue-pt); }
+  .rdot-border  { background: var(--green-sp);     border-color: var(--green-sp); }
+  .rdot-es      { background: var(--green-sp);     border-color: var(--green-sp); }
+  .rdot-spirit  { background: var(--teal-spirit);  border-color: var(--teal-spirit); }
+  .rdot-arrival { background: var(--amber);        border-color: var(--amber);
+                  width: 14px; height: 14px; }
+
+  .route-stop-name {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 600;
+    color: rgba(247,243,236,0.85);
+    white-space: nowrap;
+    letter-spacing: 0.2px;
+  }
+  .route-stop-name.stop-arrival {
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .route-arrow {
+    display: flex;
+    align-items: center;
+    padding: 0 6px;
+    padding-bottom: 16px; /* align with dot row */
+  }
+  .route-arrow svg {
+    opacity: 0.35;
+  }
+
+  .route-km-label {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    color: rgba(247,243,236,0.35);
+    letter-spacing: 0.5px;
+    white-space: nowrap;
+  }
 
   /* ── Footer ── */
   footer {
@@ -506,7 +660,37 @@
     <div class="hero-eyebrow">✦ Trip Planner · 3 pilgrims · May 2026</div>
     <h1>Camino <em>Portugués</em></h1>
     <div style="font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,24px);font-style:italic;color:var(--gold);opacity:0.85;margin-bottom:16px;letter-spacing:0.5px;">The Spiritual Route</div>
-    <p class="hero-subtitle">Porto → Vairão → Barcelos → Ponte de Lima → Tui → Pontevedra → Combarro → Santiago de Compostela → Porto</p>
+    <div class="route-flow">
+      <span class="rf-city">Porto</span>
+      <span class="rf-step"><span class="rf-km">27 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Vairão</span>
+      <span class="rf-step"><span class="rf-km">27 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Barcelos</span>
+      <span class="rf-step"><span class="rf-km">22 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Vitorino</span>
+      <span class="rf-step"><span class="rf-km">13 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Ponte de Lima</span>
+      <span class="rf-step"><span class="rf-km">18 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Rubiães</span>
+      <span class="rf-step"><span class="rf-km">19 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Tui</span>
+      <span class="rf-step"><span class="rf-km">18 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">O Porriño</span>
+      <span class="rf-step"><span class="rf-km">19 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Redondela</span>
+      <span class="rf-step"><span class="rf-km">17 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Pontevedra</span>
+      <span class="rf-step"><span class="rf-km">12 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Combarro</span>
+      <span class="rf-step"><span class="rf-km">12 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Armenteira</span>
+      <span class="rf-step"><span class="rf-km">25 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Vilanova</span>
+      <span class="rf-step"><span class="rf-km">🚢 boat</span><span class="rf-arr">→</span></span>
+      <span class="rf-city">Padrón</span>
+      <span class="rf-step"><span class="rf-km">22 km</span><span class="rf-arr">→</span></span>
+      <span class="rf-city rf-final">Santiago ✦</span>
+    </div>
     <div class="hero-stats">
       <div class="stat"><span class="stat-num">18</span><span class="stat-label">Days</span></div>
       <div class="stat"><span class="stat-num">~270</span><span class="stat-label">km walked</span></div>
@@ -743,21 +927,27 @@ function renderCard(d) {
   const isWarn = d.notes && d.notes.includes("BOAT TICKET NOT YET BOOKED");
   const dayNum = d.day.replace(/[^0-9]/g,'') || d.day;
 
+  // 3. km appended to route in strong tone
+  const routeDisplay = (d.km && d.km !== '—' && d.km !== 'Bus')
+    ? `${d.route} <span class="route-km">${d.km}</span>`
+    : d.route;
+
   const icons = [
     d.email ? '<span class="icon-tag icon-email">📧 Email</span>' : '',
     d.cash  ? '<span class="icon-tag icon-cash">💵 Cash</span>'  : '',
   ].filter(Boolean).join(' ');
 
-  const bookLink = d.bookUrl
-    ? `<a href="${d.bookUrl}" target="_blank" rel="noopener">📎 Book</a>`
-    : `<span style="font-size:12px;color:#999;font-style:italic">Walk-in</span>`;
+  // 2. Inline book link next to hotel name
+  const inlineBook = d.bookUrl
+    ? `<a class="inline-book" href="${d.bookUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📎 Book</a>`
+    : `<span class="inline-walkin">Walk-in</span>`;
 
   const mapLink = d.mapsUrl
-    ? `<a href="${d.mapsUrl}" target="_blank" rel="noopener">📍 Map</a>`
+    ? `<a href="${d.mapsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 Map</a>`
     : '';
 
   const boatLink = d.boatUrl
-    ? `<br><a href="${d.boatUrl}" target="_blank" rel="noopener" style="color:var(--warn)">🎟️ Book boat ticket</a>` : '';
+    ? `<a href="${d.boatUrl}" target="_blank" rel="noopener" style="color:var(--warn)" onclick="event.stopPropagation()">🎟️ Book boat ticket</a>` : '';
 
   const backupHtml = (d.backup && d.backup !== '—')
     ? `<div class="backup-tag">Alt: ${d.backup}</div>` : '';
@@ -770,37 +960,40 @@ function renderCard(d) {
     </div>
     <div class="day-body">
       <div class="day-top">
-        <div class="day-route">${d.route}</div>
+        <div class="day-route">${routeDisplay}</div>
         <div class="day-meta">
-          ${d.km !== '—' && d.km !== 'Bus' ? `<span class="badge badge-km">${d.km}</span>` : ''}
           <span class="badge badge-date">${d.date}</span>
           ${isWarn ? '<span class="badge badge-warn">⚠️ Action needed</span>' : ''}
           <button class="expand-btn" aria-label="expand">⌄</button>
         </div>
       </div>
+
+      <!-- 2. Collapsed accom row: name + book + icons + price all inline -->
       <div class="day-accom">
         <span class="accom-name">${d.accom}</span>
-        ${renderPriceTag(d.ppp)}
+        ${inlineBook}
         <div class="accom-icons">${icons}</div>
+        ${renderPriceTag(d.ppp)}
       </div>
+
+      <!-- Expanded detail panel -->
       <div class="day-detail">
         <div class="detail-block">
           <div class="detail-label">Accommodation</div>
           <div class="detail-value">
-            ${d.accom}${backupHtml}
-            <div style="margin-top:6px;display:flex;gap:10px;flex-wrap:wrap">
-              ${bookLink} ${mapLink}
+            <strong>${d.accom}</strong>${backupHtml}
+            <div style="margin-top:8px;display:flex;gap:8px;flex-wrap:wrap">
+              ${mapLink} ${boatLink}
             </div>
-            ${boatLink}
           </div>
         </div>
         <div class="detail-block">
           <div class="detail-label">Price</div>
-          <div class="detail-value">${d.ppp != null ? `€${d.ppp} per person<br><strong>€${d.ppp*3} total (×3)</strong>` : 'Included'}</div>
+          <div class="detail-value">${d.ppp != null ? `<strong>€${d.ppp}</strong> per person<br><strong>€${d.ppp*3} total (×3)</strong>` : 'Included'}</div>
         </div>
         <div class="detail-block">
           <div class="detail-label">Notes</div>
-          <div class="detail-value${isWarn ? ' warn' : ''}">${d.notes.replace(/\n/g,'<br>')}</div>
+          <div class="detail-value${isWarn ? ' warn' : ''}"><strong>${d.notes.replace(/\n/g,'<br>')}</strong></div>
         </div>
         <div class="detail-block">
           <div class="detail-label">Cancel By</div>
@@ -808,7 +1001,7 @@ function renderCard(d) {
         </div>
         <div class="attraction-block">
           <div class="detail-label">✦ Attraction / Highlight</div>
-          <div class="detail-value">${d.attraction}</div>
+          <div class="detail-value attraction-text">${d.attraction}</div>
         </div>
       </div>
     </div>
