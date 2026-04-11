@@ -279,14 +279,53 @@
   .legend-bar {
     background: var(--peach);
     border-bottom: 1px solid var(--peach-border);
-    padding: 14px 40px;
-    display: flex;
-    gap: 20px;
-    flex-wrap: wrap;
-    align-items: center;
+    padding: 0 40px;
     font-size: 12px;
     max-width: 100%;
-    overflow-x: auto;
+  }
+  .legend-toggle {
+    display: none; /* hidden on desktop */
+  }
+  .legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    align-items: center;
+    padding: 12px 0;
+  }
+  /* Mobile: show toggle button, hide items by default */
+  @media (max-width: 640px) {
+    .legend-bar { padding: 0 18px; }
+    .legend-toggle {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      background: none;
+      border: none;
+      padding: 12px 0;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+    .legend-toggle-label {
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--ink-soft);
+      letter-spacing: 0.3px;
+    }
+    .legend-toggle-arrow {
+      font-size: 16px;
+      color: var(--ink-soft);
+      transition: transform 0.2s;
+    }
+    .legend-toggle-arrow.open { transform: rotate(180deg); }
+    .legend-items {
+      display: none;
+      gap: 10px 14px;
+      font-size: 11px;
+      padding: 0 0 12px;
+    }
+    .legend-items.open { display: flex; }
   }
   .legend-label { color: var(--ink-soft); font-weight: 500; margin-right: 4px; }
   .legend-item {
@@ -719,13 +758,6 @@
     .hero-stats { gap: 14px 20px; }
     .stat-num { font-size: 22px; }
 
-    /* Legend — scrollable row on mobile */
-    .legend-bar {
-      padding: 10px 18px;
-      gap: 10px 16px;
-      font-size: 11px;
-    }
-
     /* Warning banner */
     .warn-banner { padding: 12px 18px; font-size: 12px; gap: 6px; }
 
@@ -884,17 +916,23 @@
 </div>
 
 <!-- Legend -->
-<div class="legend-bar">
-  <span class="legend-label">Segments:</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--c-porto)"></span>Porto</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--c-pt)"></span>Portugal</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--c-es)"></span>Spain</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--c-spirit)"></span>🌿 Variante Espiritual</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--c-arrival)"></span>🏆 Arrival</span>
-  <span style="margin-left:8px;color:var(--ink-soft)">|</span>
-  <span class="legend-item"><span class="icon-tag icon-email">📧 Email</span> = contact by email</span>
-  <span class="legend-item"><span class="icon-tag icon-cash">💵 Cash</span> = cash only</span>
-  <span style="font-size:12px;color:var(--ink-soft)">— Tap any card to expand</span>
+<div class="legend-bar" id="legend-bar">
+  <button class="legend-toggle" onclick="toggleLegend()" aria-label="Toggle legend">
+    <span class="legend-toggle-label">🗺️ Colour key</span>
+    <span class="legend-toggle-arrow" id="legend-arrow">⌄</span>
+  </button>
+  <div class="legend-items" id="legend-items">
+    <span class="legend-label">Segments:</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--c-porto)"></span>Porto</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--c-pt)"></span>Portugal</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--c-es)"></span>Spain</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--c-spirit)"></span>🌿 Variante Espiritual</span>
+    <span class="legend-item"><span class="legend-dot" style="background:var(--c-arrival)"></span>🏆 Arrival</span>
+    <span style="margin-left:8px;color:var(--ink-soft)">|</span>
+    <span class="legend-item"><span class="icon-tag icon-email">📧 Email</span> = contact by email</span>
+    <span class="legend-item"><span class="icon-tag icon-cash">💵 Cash</span> = cash only</span>
+    <span style="font-size:12px;color:var(--ink-soft)">— Tap any card to expand</span>
+  </div>
 </div>
 
 <!-- Warn banner -->
@@ -1189,6 +1227,13 @@ function renderCard(d) {
       </div>
     </div>
   </div>`;
+}
+
+function toggleLegend() {
+  const items = document.getElementById('legend-items');
+  const arrow = document.getElementById('legend-arrow');
+  items.classList.toggle('open');
+  arrow.classList.toggle('open');
 }
 
 function toggleCard(card) {
