@@ -7,31 +7,41 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
   :root {
-    --cream: #F7F3EC;
-    --parchment: #EDE5D5;
-    --ink: #1C1A16;
-    --ink-soft: #4A4640;
-    --gold: #C4922A;
-    --gold-light: #F5E6C8;
-    --blue-pt: #2E5FA3;
-    --blue-pt-light: #E8EFF9;
-    --green-sp: #1E6B47;
-    --green-sp-light: #E3F2EB;
-    --teal-spirit: #1A7070;
-    --teal-light: #E0F2F2;
-    --rust: #B84C20;
-    --rust-light: #FAE9E3;
-    --amber: #C4922A;
-    --amber-light: #FEF3DC;
-    --warn: #B83232;
-    --warn-light: #FDEAEA;
-    --shadow: rgba(28,26,22,0.10);
+    /* ── Three PANTONE colours ── */
+    --cloud:       #F0EEE9;   /* 11-4201 Cloud Dancer — page base */
+    --lemon:       #F6EBC8;   /* 11-0515 Lemon Icing  — hero bg   */
+    --peach:       #F0D8CC;   /* 12-1107 Peach Dust   — accents   */
+
+    /* ── Derived tones ── */
+    --cloud-border:#D8D3C8;
+    --lemon-border:#D9C98A;
+    --peach-border:#D4B8A8;
+    --parchment:   #EDE8DC;
+
+    /* ── Text ── */
+    --ink:         #2A2318;
+    --ink-soft:    #5A4F3C;
+    --gold:        #7A5C18;   /* deep warm gold for headings/accents */
+
+    /* ── Segment accent colours — warm earthy only ── */
+    --c-porto:     #8B4513;   /* terracotta */
+    --c-pt:        #4A6228;   /* forest green */
+    --c-border:    #7A5C28;   /* warm tan */
+    --c-es:        #6B3A2A;   /* sienna */
+    --c-spirit:    #3D6B5C;   /* sage */
+    --c-arrival:   #7A5C18;   /* deep gold */
+    --c-return:    #8B4513;
+
+    /* ── Utility ── */
+    --warn:        #A63020;
+    --warn-light:  #FAE8E5;
+    --shadow:      rgba(42,35,24,0.08);
   }
 
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
   body {
-    background: var(--cream);
+    background: var(--cloud);
     color: var(--ink);
     font-family: 'DM Sans', sans-serif;
     font-weight: 300;
@@ -39,20 +49,22 @@
     overflow-x: hidden;
   }
 
-  /* ── Hero ── */
+  /* ── Hero ── Lemon Icing → Cloud Dancer gradient, simple & clean */
   .hero {
-    background: var(--ink);
-    color: var(--cream);
-    padding: 60px 40px 48px;
+    background: linear-gradient(175deg, var(--lemon) 0%, var(--cloud) 100%);
+    color: var(--ink);
+    padding: 52px 40px 48px;
     position: relative;
     overflow: hidden;
+    border-bottom: 1px solid var(--cloud-border);
   }
   .hero::before {
     content: '';
     position: absolute; inset: 0;
-    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23C4922A' fill-opacity='0.06'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
-    opacity: 1;
+    background: radial-gradient(ellipse at 85% 15%, rgba(240,216,204,0.45) 0%, transparent 60%);
+    pointer-events: none;
   }
+  .hero::after { display: none; }
   .hero-inner { position: relative; max-width: 960px; margin: 0 auto; }
   .hero-eyebrow {
     font-family: 'DM Mono', monospace;
@@ -60,59 +72,74 @@
     letter-spacing: 3px;
     text-transform: uppercase;
     color: var(--gold);
-    margin-bottom: 16px;
+    margin-bottom: 12px;
   }
   .hero h1 {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(36px, 6vw, 64px);
+    font-size: clamp(36px, 6vw, 60px);
     font-weight: 700;
     line-height: 1.1;
-    margin-bottom: 12px;
+    margin-bottom: 6px;
+    color: var(--ink);
   }
   .hero h1 em { font-style: italic; color: var(--gold); }
-  /* ── Route flow (km above arrow) ── */
+  .hero-tagline {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(15px, 2.2vw, 20px);
+    font-style: italic;
+    color: var(--ink-soft);
+    margin-bottom: 24px;
+    letter-spacing: 0.3px;
+  }
+
+  /* Route flow — desktop: km above arrow; mobile: just cities */
   .route-flow {
     display: flex;
     flex-wrap: wrap;
     align-items: flex-end;
     gap: 0;
     margin-bottom: 28px;
-    row-gap: 8px;
+    row-gap: 6px;
   }
   .rf-city {
-    font-size: 13px;
+    font-size: 12px;
     font-weight: 600;
-    color: rgba(247,243,236,0.9);
+    color: var(--ink);
     white-space: nowrap;
     line-height: 1;
-    padding-bottom: 2px;
+    padding-bottom: 1px;
   }
-  .rf-final {
-    color: var(--gold);
-    font-weight: 700;
-  }
+  .rf-final { color: var(--gold); font-weight: 700; }
   .rf-step {
     display: inline-flex;
     flex-direction: column;
     align-items: center;
-    margin: 0 4px;
+    margin: 0 3px;
     line-height: 1;
   }
   .rf-km {
     font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--gold);
-    opacity: 0.75;
+    font-size: 8px;
+    color: var(--ink-soft);
+    opacity: 0.6;
     letter-spacing: 0.3px;
     white-space: nowrap;
     margin-bottom: 1px;
   }
   .rf-arr {
-    font-size: 12px;
-    color: rgba(247,243,236,0.35);
+    font-size: 11px;
+    color: var(--ink-soft);
+    opacity: 0.4;
     line-height: 1;
   }
-
+  /* On mobile: hide km labels, tighten spacing */
+  @media (max-width: 640px) {
+    .rf-km { display: none; }
+    .rf-city { font-size: 10px; }
+    .rf-arr { font-size: 10px; }
+    .rf-step { margin: 0 1px; }
+    .route-flow { row-gap: 4px; margin-bottom: 20px; }
+  }
 
   /* ── Hero stats ── */
   .hero-stats {
@@ -136,19 +163,20 @@
     font-size: 11px;
     letter-spacing: 1.5px;
     text-transform: uppercase;
-    color: rgba(247,243,236,0.5);
+    color: var(--ink-soft);
+    opacity: 0.6;
   }
   .hero-divider {
-    width: 48px; height: 2px;
+    width: 48px; height: 1px;
     background: var(--gold);
-    margin: 28px 0 0;
-    opacity: 0.4;
+    opacity: 0.35;
+    margin: 24px 0 0;
   }
 
-  /* ── Legend bar ── */
+  /* ── Legend bar — Peach Dust ── */
   .legend-bar {
-    background: var(--parchment);
-    border-bottom: 1px solid rgba(28,26,22,0.10);
+    background: var(--peach);
+    border-bottom: 1px solid var(--peach-border);
     padding: 14px 40px;
     display: flex;
     gap: 20px;
@@ -185,38 +213,41 @@
   /* ── Main content ── */
   .main { max-width: 1100px; margin: 0 auto; padding: 40px 24px 80px; }
 
-  /* ── Section header ── */
+  /* ── Section header — clearly visible on light bg ── */
   .section-header {
     display: flex;
     align-items: center;
-    gap: 14px;
-    margin: 40px 0 20px;
-    padding-bottom: 10px;
-    border-bottom: 1.5px solid currentColor;
+    gap: 10px;
+    margin: 32px 0 12px;
+    padding: 10px 14px;
+    border-radius: 8px;
+    background: var(--peach);
+    border-left: 4px solid currentColor;
   }
-  .section-header .seg-icon { font-size: 20px; }
+  .section-header .seg-icon { font-size: 16px; line-height: 1; flex-shrink: 0; }
   .section-header h2 {
-    font-family: 'Playfair Display', serif;
-    font-size: 20px;
-    font-weight: 400;
-    letter-spacing: 0.3px;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    letter-spacing: 0.8px;
+    text-transform: uppercase;
   }
   .section-header .seg-days {
     font-family: 'DM Mono', monospace;
-    font-size: 11px;
+    font-size: 10px;
     letter-spacing: 1px;
     opacity: 0.5;
     margin-left: auto;
+    flex-shrink: 0;
   }
-
-  /* Segment colour themes */
-  .seg-porto   { color: var(--rust);       border-color: var(--rust); }
-  .seg-pt      { color: var(--blue-pt);    border-color: var(--blue-pt); }
-  .seg-border  { color: var(--green-sp);   border-color: var(--green-sp); }
-  .seg-es      { color: var(--green-sp);   border-color: var(--green-sp); }
-  .seg-spirit  { color: var(--teal-spirit);border-color: var(--teal-spirit); }
-  .seg-arrival { color: var(--amber);      border-color: var(--amber); }
-  .seg-return  { color: var(--rust);       border-color: var(--rust); }
+  /* Segment colour = left border + text */
+  .seg-porto   { color: var(--c-porto); }
+  .seg-pt      { color: var(--c-pt); }
+  .seg-border  { color: var(--c-border); }
+  .seg-es      { color: var(--c-es); }
+  .seg-spirit  { color: var(--c-spirit); }
+  .seg-arrival { color: var(--c-arrival); }
+  .seg-return  { color: var(--c-return); }
 
   /* ── Day cards ── */
   .days-grid { display: flex; flex-direction: column; gap: 12px; }
@@ -240,7 +271,7 @@
   .day-card:active { opacity: 0.92; }
   .day-card.expanded { border-color: rgba(28,26,22,0.12); }
 
-  /* Left accent strip */
+  /* Left accent strip — solid fill, pops against light page */
   .day-accent {
     display: flex;
     flex-direction: column;
@@ -248,6 +279,7 @@
     justify-content: center;
     padding: 16px 8px;
     gap: 4px;
+    border-right: none;
   }
   .day-num {
     font-family: 'Playfair Display', serif;
@@ -264,14 +296,14 @@
     color: rgba(255,255,255,0.7);
   }
 
-  /* Accent colours per segment */
-  .accent-porto   { background: var(--rust); }
-  .accent-pt      { background: var(--blue-pt); }
-  .accent-border  { background: var(--green-sp); }
-  .accent-es      { background: var(--green-sp); }
-  .accent-spirit  { background: var(--teal-spirit); }
-  .accent-arrival { background: var(--amber); }
-  .accent-return  { background: var(--rust); }
+  /* Accent colours — solid fills */
+  .accent-porto   { background: var(--c-porto); }
+  .accent-pt      { background: var(--c-pt); }
+  .accent-border  { background: var(--c-border); }
+  .accent-es      { background: var(--c-es); }
+  .accent-spirit  { background: var(--c-spirit); }
+  .accent-arrival { background: var(--c-arrival); }
+  .accent-return  { background: var(--c-return); }
   .accent-flight  { background: var(--ink-soft); }
 
   /* Card body */
@@ -307,8 +339,8 @@
     font-weight: 500;
     white-space: nowrap;
   }
-  .badge-km { background: var(--parchment); color: var(--ink-soft); }
-  .badge-date { background: var(--ink); color: var(--cream); }
+  .badge-km   { background: var(--peach);   color: var(--ink-soft); }
+  .badge-date { background: var(--ink-soft); color: var(--cloud); }
   .badge-warn { background: var(--warn-light); color: var(--warn); border: 1px solid var(--warn); }
 
   .day-accom {
@@ -320,11 +352,11 @@
     gap: 6px;
     flex-wrap: wrap;
   }
-  .accom-name { font-weight: 500; color: var(--ink); }
+  .accom-name { font-weight: 600; color: var(--ink); font-size: 15px; }
   .accom-price {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
-    background: var(--gold-light);
+    background: var(--lemon);
     color: var(--gold);
     padding: 2px 7px;
     border-radius: 4px;
@@ -337,8 +369,8 @@
     border-radius: 4px;
     font-weight: 500;
   }
-  .icon-email { background: #EBF0FA; color: var(--blue-pt); }
-  .icon-cash  { background: #FEF3DC; color: var(--amber); }
+  .icon-email { background: var(--lemon); color: var(--gold); }
+  .icon-cash  { background: var(--peach); color: var(--c-porto); }
 
   /* 3. km inline in route title */
   .route-km {
@@ -350,13 +382,14 @@
     letter-spacing: 0.3px;
   }
 
-  /* 2. Inline book link next to hotel name */
+  /* Inline book link — Lemon Icing */
   .inline-book {
     font-family: 'DM Mono', monospace;
     font-size: 11px;
     font-weight: 600;
-    color: var(--blue-pt);
-    background: var(--blue-pt-light);
+    color: var(--gold);
+    background: var(--lemon);
+    border: 1px solid var(--lemon-border);
     padding: 2px 8px;
     border-radius: 4px;
     text-decoration: none;
@@ -366,7 +399,8 @@
   .inline-book:hover { text-decoration: underline; }
   .inline-walkin {
     font-size: 11px;
-    color: #999;
+    color: var(--ink-soft);
+    opacity: 0.45;
     font-style: italic;
   }
 
@@ -392,14 +426,14 @@
     margin-bottom: 3px;
   }
   .detail-value a {
-    color: var(--blue-pt);
+    color: var(--gold);
     text-decoration: none;
     font-weight: 600;
     display: inline-flex;
     align-items: center;
     gap: 4px;
     padding: 4px 10px;
-    background: var(--parchment);
+    background: var(--lemon);
     border-radius: 6px;
     font-size: 13px;
   }
@@ -455,10 +489,10 @@
     border-radius: 4px;
   }
 
-  /* Attraction highlight */
+  /* Attraction highlight — Peach Dust */
   .attraction-block {
     grid-column: 1 / -1;
-    background: var(--parchment);
+    background: var(--peach);
     border-radius: 8px;
     padding: 10px 14px;
     font-size: 13px;
@@ -503,12 +537,12 @@
     z-index: 1;
   }
   /* colour per segment */
-  .rdot-porto   { background: var(--rust);        border-color: var(--rust); }
-  .rdot-pt      { background: var(--blue-pt);      border-color: var(--blue-pt); }
-  .rdot-border  { background: var(--green-sp);     border-color: var(--green-sp); }
-  .rdot-es      { background: var(--green-sp);     border-color: var(--green-sp); }
-  .rdot-spirit  { background: var(--teal-spirit);  border-color: var(--teal-spirit); }
-  .rdot-arrival { background: var(--amber);        border-color: var(--amber);
+  .rdot-porto   { background: var(--c-porto);   border-color: var(--c-porto); }
+  .rdot-pt      { background: var(--c-pt);      border-color: var(--c-pt); }
+  .rdot-border  { background: var(--c-border);  border-color: var(--c-border); }
+  .rdot-es      { background: var(--c-es);      border-color: var(--c-es); }
+  .rdot-spirit  { background: var(--c-spirit);  border-color: var(--c-spirit); }
+  .rdot-arrival { background: var(--c-arrival); border-color: var(--c-arrival);
                   width: 14px; height: 14px; }
 
   .route-stop-name {
@@ -545,22 +579,22 @@
   /* ── Footer ── */
   footer {
     background: var(--ink);
-    color: rgba(247,243,236,0.5);
+    color: rgba(240,238,233,0.55);
     text-align: center;
     padding: 28px 24px;
     font-size: 12px;
     letter-spacing: 0.5px;
   }
-  footer strong { color: var(--gold); }
+  footer strong { color: var(--lemon); }
 
   /* ── Mobile — touch-friendly improvements ── */
   @media (max-width: 640px) {
     /* Hero */
-    .hero { padding: 32px 18px 28px; }
-    .hero h1 { font-size: 38px; }
-    .hero-subtitle { font-size: 13px; margin-bottom: 24px; }
-    .hero-stats { gap: 16px 24px; }
-    .stat-num { font-size: 24px; }
+    .hero { padding: 28px 18px 32px; }
+    .hero h1 { font-size: 34px; }
+    .hero-tagline { font-size: 15px; margin-bottom: 16px; }
+    .hero-stats { gap: 14px 20px; }
+    .stat-num { font-size: 22px; }
 
     /* Legend — scrollable row on mobile */
     .legend-bar {
@@ -576,13 +610,15 @@
     .main { padding: 20px 12px 60px; }
 
     /* Section headers */
-    .section-header { margin: 28px 0 14px; }
-    .section-header h2 { font-size: 17px; }
+    .section-header { margin: 20px 0 10px; padding: 9px 12px; }
+    .section-header h2 { font-size: 12px; }
+    .section-header .seg-days { font-size: 9px; }
 
     /* Cards — larger touch target, readable text */
     .day-card { grid-template-columns: 60px 1fr; border-radius: 10px; }
     .day-accent { padding: 14px 6px; }
     .day-num { font-size: 20px; }
+    .day-accent { padding: 14px 6px; }
     .day-body { padding: 12px 14px 12px 12px; }
 
     /* Route text */
@@ -659,7 +695,7 @@
   <div class="hero-inner">
     <div class="hero-eyebrow">✦ Trip Planner · 3 pilgrims · May 2026</div>
     <h1>Camino <em>Portugués</em></h1>
-    <div style="font-family:'Playfair Display',serif;font-size:clamp(16px,2.5vw,24px);font-style:italic;color:var(--gold);opacity:0.85;margin-bottom:16px;letter-spacing:0.5px;">The Spiritual Route</div>
+    <div class="hero-tagline">The Spiritual Route</div>
     <div class="route-flow">
       <span class="rf-city">Porto</span>
       <span class="rf-step"><span class="rf-km">27 km</span><span class="rf-arr">→</span></span>
@@ -705,11 +741,11 @@
 <!-- Legend -->
 <div class="legend-bar">
   <span class="legend-label">Segments:</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--rust)"></span>Porto</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--blue-pt)"></span>Portugal</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--green-sp)"></span>Spain</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--teal-spirit)"></span>🌿 Variante Espiritual</span>
-  <span class="legend-item"><span class="legend-dot" style="background:var(--amber)"></span>🏆 Arrival</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--c-porto)"></span>Porto</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--c-pt)"></span>Portugal</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--c-es)"></span>Spain</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--c-spirit)"></span>🌿 Variante Espiritual</span>
+  <span class="legend-item"><span class="legend-dot" style="background:var(--c-arrival)"></span>🏆 Arrival</span>
   <span style="margin-left:8px;color:var(--ink-soft)">|</span>
   <span class="legend-item"><span class="icon-tag icon-email">📧 Email</span> = contact by email</span>
   <span class="legend-item"><span class="icon-tag icon-cash">💵 Cash</span> = cash only</span>
@@ -939,9 +975,10 @@ function renderCard(d) {
   ].filter(Boolean).join(' ');
 
   // 2. Inline book link next to hotel name
+  const hideWalkin = ['1','17','18'].includes(d.day);
   const inlineBook = d.bookUrl
     ? `<a class="inline-book" href="${d.bookUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📎 Book</a>`
-    : `<span class="inline-walkin">Walk-in</span>`;
+    : hideWalkin ? '' : `<span class="inline-walkin">Walk-in</span>`;
 
   const mapLink = d.mapsUrl
     ? `<a href="${d.mapsUrl}" target="_blank" rel="noopener" onclick="event.stopPropagation()">📍 Map</a>`
