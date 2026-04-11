@@ -141,7 +141,109 @@
     .route-flow { row-gap: 4px; margin-bottom: 20px; }
   }
 
-  /* ── Hero stats ── */
+  /* ── Pilgrim feature ── */
+  .hero-pilgrims {
+    display: flex;
+    align-items: center;
+    gap: 28px;
+    margin-bottom: 8px;
+    flex-wrap: wrap;
+  }
+
+  .pilgrim-feature {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    background: rgba(255,255,255,0.55);
+    border: 1px solid var(--peach-border);
+    border-radius: 16px;
+    padding: 18px 28px 14px;
+    min-width: 140px;
+    position: relative;
+    box-shadow: 0 2px 12px rgba(42,35,24,0.07);
+  }
+
+  .pilgrim-icons {
+    display: flex;
+    gap: 2px;
+    margin-bottom: 4px;
+  }
+  .pilgrim-icon {
+    font-size: 20px;
+    line-height: 1;
+    transition: transform 0.3s;
+  }
+  .pi-left  { transform: translateX(4px) rotate(-5deg); opacity: 0.7; font-size: 17px; }
+  .pi-mid   { transform: translateY(-4px); font-size: 22px; z-index: 1; }
+  .pi-right { transform: translateX(-4px) rotate(5deg); opacity: 0.7; font-size: 17px; }
+
+  .pilgrim-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    font-weight: 700;
+    color: var(--gold);
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+  .pilgrim-label {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    font-style: italic;
+    color: var(--ink);
+    letter-spacing: 0.3px;
+    margin-top: 1px;
+  }
+  .pilgrim-sub {
+    font-family: 'DM Mono', monospace;
+    font-size: 9px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.55;
+    margin-top: 2px;
+  }
+
+  .hero-stats-side {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+  .stat-row {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+  }
+  .stat-val {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink);
+    line-height: 1;
+  }
+  .stat-lbl {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    opacity: 0.6;
+  }
+  .stat-divider {
+    width: 28px;
+    height: 1px;
+    background: var(--peach-border);
+    opacity: 0.6;
+  }
+
+  @media (max-width: 640px) {
+    .hero-pilgrims { gap: 16px; }
+    .pilgrim-feature { padding: 14px 22px 12px; min-width: 120px; }
+    .pilgrim-num { font-size: 42px; }
+    .stat-val { font-size: 18px; }
+  }
+
+  /* ── Hero stats (old — keep for fallback) ── */
   .hero-stats {
     display: flex;
     gap: 32px;
@@ -248,6 +350,27 @@
   .seg-spirit  { color: var(--c-spirit); }
   .seg-arrival { color: var(--c-arrival); }
   .seg-return  { color: var(--c-return); }
+
+  .section-header .seg-chevron {
+    font-size: 18px;
+    margin-left: 8px;
+    transition: transform 0.25s;
+    color: currentColor;
+    opacity: 0.55;
+    display: none;
+    flex-shrink: 0;
+  }
+  .section-header.seg-open .seg-chevron { transform: rotate(180deg); }
+
+  @media (max-width: 640px) {
+    .section-header {
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+    }
+    .section-header .seg-chevron { display: block; }
+    .section-header .seg-days { display: none; }
+  }
 
   /* ── Day cards ── */
   .days-grid { display: flex; flex-direction: column; gap: 12px; }
@@ -727,12 +850,34 @@
       <span class="rf-step"><span class="rf-km">22 km</span><span class="rf-arr">→</span></span>
       <span class="rf-city rf-final">Santiago ✦</span>
     </div>
-    <div class="hero-stats">
-      <div class="stat"><span class="stat-num">18</span><span class="stat-label">Days</span></div>
-      <div class="stat"><span class="stat-num">~270</span><span class="stat-label">km walked</span></div>
-      <div class="stat"><span class="stat-num">3</span><span class="stat-label">Pilgrims</span></div>
-      <div class="stat"><span class="stat-num">3/5</span><span class="stat-label">Depart</span></div>
-      <div class="stat"><span class="stat-num">21/5</span><span class="stat-label">Return</span></div>
+    <div class="hero-pilgrims">
+      <div class="pilgrim-feature">
+        <div class="pilgrim-icons">
+          <span class="pilgrim-icon pi-left">🚶</span>
+          <span class="pilgrim-icon pi-mid">🚶</span>
+          <span class="pilgrim-icon pi-right">🚶</span>
+        </div>
+        <div class="pilgrim-num">3</div>
+        <div class="pilgrim-label">Pilgrims</div>
+        <div class="pilgrim-sub">walking together</div>
+      </div>
+      <div class="hero-stats-side">
+        <div class="stat-row">
+          <span class="stat-val">18</span><span class="stat-lbl">days</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-row">
+          <span class="stat-val">~270</span><span class="stat-lbl">km</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-row">
+          <span class="stat-val">3/5</span><span class="stat-lbl">depart</span>
+        </div>
+        <div class="stat-divider"></div>
+        <div class="stat-row">
+          <span class="stat-val">21/5</span><span class="stat-lbl">return</span>
+        </div>
+      </div>
     </div>
     <div class="hero-divider"></div>
   </div>
@@ -1050,6 +1195,14 @@ function toggleCard(card) {
   card.classList.toggle('expanded');
 }
 
+function toggleSegment(header) {
+  // Only collapse on mobile
+  if (window.innerWidth > 640) return;
+  const grid = header.nextElementSibling;
+  const isOpen = header.classList.toggle('seg-open');
+  grid.style.display = isOpen ? 'flex' : 'none';
+}
+
 // Render grouped by segment
 const main = document.getElementById('main');
 let lastSeg = null;
@@ -1059,11 +1212,13 @@ data.forEach(d => {
   if (d.seg !== lastSeg) {
     const seg = segments.find(s => s.key === d.seg);
     if (seg && seg.label) {
+      const segClass = d.seg === 'border' ? 'border' : d.seg === 'spirit' ? 'spirit' : d.seg === 'arrival' ? 'arrival' : d.seg === 'return' ? 'return' : d.seg;
       html += `
-      <div class="section-header seg-${d.seg === 'border' ? 'border' : d.seg === 'spirit' ? 'spirit' : d.seg === 'arrival' ? 'arrival' : d.seg === 'return' ? 'return' : d.seg}">
+      <div class="section-header seg-${segClass}" onclick="toggleSegment(this)">
         <span class="seg-icon">${seg.icon}</span>
         <h2>${seg.label}</h2>
         <span class="seg-days">${seg.days}</span>
+        <span class="seg-chevron">⌄</span>
       </div>
       <div class="days-grid">`;
     }
@@ -1073,6 +1228,25 @@ data.forEach(d => {
 });
 html += '</div>';
 main.innerHTML = html;
+
+// On mobile: collapse all segments by default
+function applyMobileCollapse() {
+  if (window.innerWidth <= 640) {
+    document.querySelectorAll('.section-header').forEach(h => {
+      h.classList.remove('seg-open');
+      const grid = h.nextElementSibling;
+      if (grid) grid.style.display = 'none';
+    });
+  } else {
+    document.querySelectorAll('.section-header').forEach(h => {
+      h.classList.add('seg-open');
+      const grid = h.nextElementSibling;
+      if (grid) grid.style.display = 'flex';
+    });
+  }
+}
+applyMobileCollapse();
+window.addEventListener('resize', applyMobileCollapse);
 
 // Stagger card animations
 document.querySelectorAll('.day-card').forEach((card, i) => {
