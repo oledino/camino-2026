@@ -390,27 +390,6 @@
   .seg-arrival { color: var(--c-arrival); }
   .seg-return  { color: var(--c-return); }
 
-  .section-header .seg-chevron {
-    font-size: 18px;
-    margin-left: 8px;
-    transition: transform 0.25s;
-    color: currentColor;
-    opacity: 0.55;
-    display: none;
-    flex-shrink: 0;
-  }
-  .section-header.seg-open .seg-chevron { transform: rotate(180deg); }
-
-  @media (max-width: 640px) {
-    .section-header {
-      cursor: pointer;
-      -webkit-tap-highlight-color: transparent;
-      user-select: none;
-    }
-    .section-header .seg-chevron { display: block; }
-    .section-header .seg-days { display: none; }
-  }
-
   /* ── Day cards ── */
   .days-grid { display: flex; flex-direction: column; gap: 12px; }
 
@@ -1240,14 +1219,6 @@ function toggleCard(card) {
   card.classList.toggle('expanded');
 }
 
-function toggleSegment(header) {
-  // Only collapse on mobile
-  if (window.innerWidth > 640) return;
-  const grid = header.nextElementSibling;
-  const isOpen = header.classList.toggle('seg-open');
-  grid.style.display = isOpen ? 'flex' : 'none';
-}
-
 // Render grouped by segment
 const main = document.getElementById('main');
 let lastSeg = null;
@@ -1257,13 +1228,12 @@ data.forEach(d => {
   if (d.seg !== lastSeg) {
     const seg = segments.find(s => s.key === d.seg);
     if (seg && seg.label) {
-      const segClass = d.seg === 'border' ? 'border' : d.seg === 'spirit' ? 'spirit' : d.seg === 'arrival' ? 'arrival' : d.seg === 'return' ? 'return' : d.seg;
+      const sc = d.seg === 'border' ? 'border' : d.seg === 'spirit' ? 'spirit' : d.seg === 'arrival' ? 'arrival' : d.seg === 'return' ? 'return' : d.seg;
       html += `
-      <div class="section-header seg-${segClass}" onclick="toggleSegment(this)">
+      <div class="section-header seg-${sc}">
         <span class="seg-icon">${seg.icon}</span>
         <h2>${seg.label}</h2>
         <span class="seg-days">${seg.days}</span>
-        <span class="seg-chevron">⌄</span>
       </div>
       <div class="days-grid">`;
     }
@@ -1273,25 +1243,6 @@ data.forEach(d => {
 });
 html += '</div>';
 main.innerHTML = html;
-
-// On mobile: collapse all segments by default
-function applyMobileCollapse() {
-  if (window.innerWidth <= 640) {
-    document.querySelectorAll('.section-header').forEach(h => {
-      h.classList.remove('seg-open');
-      const grid = h.nextElementSibling;
-      if (grid) grid.style.display = 'none';
-    });
-  } else {
-    document.querySelectorAll('.section-header').forEach(h => {
-      h.classList.add('seg-open');
-      const grid = h.nextElementSibling;
-      if (grid) grid.style.display = 'flex';
-    });
-  }
-}
-applyMobileCollapse();
-window.addEventListener('resize', applyMobileCollapse);
 
 // Stagger card animations
 document.querySelectorAll('.day-card').forEach((card, i) => {
