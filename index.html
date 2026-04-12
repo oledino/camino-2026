@@ -72,9 +72,21 @@
     display: flex; align-items: baseline;
     flex-wrap: wrap; gap: 0; margin-bottom: 14px;
   }
-  .sv { font-family: 'Playfair Display', serif; font-size: clamp(18px,2.4vw,26px); font-weight: 700; color: var(--ink); }
-  .sl { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-left: 3px; }
-  .ss { font-size: 14px; color: var(--gold); opacity: 0.25; margin: 0 9px; }
+  .sv { font-family: 'Playfair Display', serif; font-size: 2.4vw; font-weight: 700; color: var(--ink); }
+  .sl { font-size: 0.85vw; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); opacity: 0.6; margin-left: 0.2em; }
+  .ss { font-size: 1.2vw; color: var(--gold); opacity: 0.25; margin: 0 0.8vw; }
+  /* Pilgrims — larger, gold, prominent */
+  .sv-pilgrims {
+    font-size: 3.6vw;
+    color: var(--gold);
+  }
+  .sl-pilgrims {
+    font-size: 1.1vw;
+    color: var(--gold);
+    opacity: 1;
+    font-weight: 600;
+    letter-spacing: 0.15em;
+  }
   /* centred title block */
   .title-block {
     display: flex; flex-direction: column; align-items: center;
@@ -87,14 +99,14 @@
   .camino-wrap { position: relative; display: inline-block; line-height: 1; }
   .title-camino {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(52px, 8vw, 92px);
+    font-size: 8vw;
     font-weight: 700; color: var(--ink);
-    letter-spacing: 3px; line-height: 1;
+    letter-spacing: 0.04em; line-height: 1;
     white-space: nowrap; display: block;
   }
   .title-spiritual {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(20px, 3vw, 38px);
+    font-size: 3vw;
     font-style: italic; font-weight: 400;
     color: var(--gold); line-height: 1; white-space: nowrap;
   }
@@ -104,7 +116,7 @@
     gap: 16px; flex-wrap: nowrap; margin-top: 5px;
   }
   #route-block {
-    font-size: 9px; font-weight: 600;
+    font-size: 13px; font-weight: 600;
     color: var(--ink); line-height: 1.3;
     flex-shrink: 0;
   }
@@ -113,22 +125,42 @@
   #route-block .sep { color: var(--ink-soft); opacity: 0.4; margin: 0 1px; font-size: 8px; }
   .title-portugues {
     font-family: 'Playfair Display', serif;
-    font-size: clamp(44px, 6.5vw, 78px);
+    font-size: 6.5vw;
     font-weight: 700; font-style: italic;
-    color: var(--gold); line-height: 1; letter-spacing: -1px; white-space: nowrap;
+    color: var(--gold); line-height: 1; letter-spacing: -0.01em; white-space: nowrap;
     flex-shrink: 0;
   }
-  /* mobile hero */
+  /* mobile hero — same layout as desktop, just tighter padding */
   @media (max-width: 640px) {
-    .hero-inner { padding: 18px 20px 28px; }
-    .hero-eyebrow { font-size: 9px; letter-spacing: 1.8px; }
-    .hero-stats { margin-bottom: 10px; }
-    .ss { margin: 0 6px; }
-    .title-row { flex-direction: column; align-items: flex-start; gap: 4px; }
-    .title-camino { font-size: clamp(44px, 13vw, 64px); letter-spacing: 2px; }
-    .title-spiritual { font-size: clamp(16px, 4.5vw, 22px); }
-    .lower-row { flex-direction: column; gap: 6px; }
-    .title-portugues { font-size: clamp(36px, 10.5vw, 52px); }
+    .hero-inner { padding: 16px 18px 24px; }
+    .hero-eyebrow { font-size: 9px; letter-spacing: 1.5px; }
+    .ss { margin: 0 5px; }
+    #route-block { font-size: 9px; text-align: right; }
+    /* collapse route to one line — same height as Portugués */
+    #route-block {
+      overflow: hidden;
+      max-height: 6.5vw;
+      transition: max-height 0.35s ease;
+    }
+    #route-block.expanded { max-height: 30vw; }
+    .lower-row { gap: 4px; }
+  }
+  /* expand arrow — mobile only */
+  .route-toggle { display: none; }
+  @media (max-width: 640px) {
+    .route-toggle {
+      display: flex;
+      align-items: flex-start;
+      background: none; border: none;
+      color: var(--gold); opacity: 0.55;
+      font-size: 5vw; line-height: 1;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+      flex-shrink: 0;
+      padding: 0 4px 0 0;
+      transition: transform 0.3s;
+    }
+    .route-toggle.open { transform: rotate(180deg); }
   }
 
   /* ── Legend bar — Peach Dust ── */
@@ -684,6 +716,8 @@
       <span class="ss">·</span>
       <span class="sv">~270</span><span class="sl">km</span>
       <span class="ss">·</span>
+      <span class="sv sv-pilgrims">3</span><span class="sl sl-pilgrims">Pilgrims</span>
+      <span class="ss">·</span>
       <span class="sv">3/5</span><span class="sl">Depart</span>
       <span class="ss">·</span>
       <span class="sv">21/5</span><span class="sl">Return</span>
@@ -714,6 +748,7 @@
           <span class="city">Padrón</span><span class="sep">–</span>
           <span class="final">Santiago ✦</span>
         </div>
+        <button class="route-toggle" id="route-toggle" onclick="toggleRouteExpand()" aria-label="Show all cities">⌄</button>
         <div class="title-portugues">Portugués</div>
       </div>
     </div>
@@ -1046,6 +1081,14 @@ document.fonts.ready.then(syncRouteWidth);
 window.addEventListener('resize', syncRouteWidth);
 window.addEventListener('orientationchange', () => setTimeout(syncRouteWidth, 200));
 syncRouteWidth();
+
+function toggleRouteExpand() {
+  const block = document.getElementById('route-block');
+  const btn   = document.getElementById('route-toggle');
+  const open  = block.classList.toggle('expanded');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-label', open ? 'Collapse cities' : 'Show all cities');
+}
 
 function toggleLegend() {
   const items = document.getElementById('legend-items');
