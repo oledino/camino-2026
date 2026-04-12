@@ -63,7 +63,7 @@
   }
   .hero-eyebrow {
     font-family: 'DM Mono', monospace;
-    font-size: 10px; letter-spacing: 2.5px;
+    font-size: 14px; letter-spacing: 2.5px;
     text-transform: uppercase;
     color: var(--gold); opacity: 0.75; margin-bottom: 8px;
   }
@@ -133,8 +133,12 @@
   /* mobile hero — same layout as desktop, just tighter padding */
   @media (max-width: 640px) {
     .hero-inner { padding: 16px 18px 24px; }
-    .hero-eyebrow { font-size: 9px; letter-spacing: 1.5px; }
-    .ss { margin: 0 5px; }
+    .hero-eyebrow { font-size: 3vw; letter-spacing: 1.5px; }
+    .sv { font-size: 5vw; }
+    .sl { font-size: 2.2vw; }
+    .ss { margin: 0 2vw; font-size: 3vw; }
+    .sv-pilgrims { font-size: 6.5vw; }
+    .sl-pilgrims { font-size: 2.4vw; }
     #route-block { font-size: 9px; text-align: right; }
     /* collapse route to one line — same height as Portugués */
     #route-block {
@@ -709,7 +713,7 @@
 <div class="hero">
   <div class="hero-inner">
 
-    <div class="hero-eyebrow">✦ Trip Planner · 3 pilgrims · May 2026</div>
+    <div class="hero-eyebrow">✦ Trip Planner · May 2026</div>
 
     <div class="hero-stats">
       <span class="sv">18</span><span class="sl">Days</span>
