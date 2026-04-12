@@ -707,6 +707,78 @@
   .hero-inner > *:nth-child(2) { animation-delay: 0.12s; }
   .hero-inner > *:nth-child(3) { animation-delay: 0.18s; }
   .hero-inner > *:nth-child(4) { animation-delay: 0.24s; }
+  /* ── Cost Summary ── */
+  .cost-section {
+    background: var(--cloud);
+    border-top: 1px solid var(--cloud-border);
+    max-width: 100%;
+  }
+  .cost-toggle {
+    width: 100%; display: flex; align-items: center;
+    justify-content: space-between;
+    padding: 16px 40px;
+    background: none; border: none; cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 14px; font-weight: 600;
+    color: var(--ink); letter-spacing: 0.3px;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .cost-toggle:hover { background: rgba(0,0,0,0.02); }
+  .cost-arrow {
+    font-size: 20px; color: var(--gold);
+    transition: transform 0.3s;
+  }
+  .cost-arrow.open { transform: rotate(180deg); }
+  .cost-body {
+    display: none;
+    padding: 0 40px 32px;
+    overflow-x: auto;
+  }
+  .cost-body.open { display: block; }
+  .cost-table {
+    width: 100%; border-collapse: collapse;
+    font-size: 13px; font-family: 'DM Sans', sans-serif;
+  }
+  .cost-table th {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px; letter-spacing: 1px;
+    text-transform: uppercase; color: var(--gold);
+    border-bottom: 1px solid var(--peach-border);
+    padding: 8px 12px; text-align: left;
+  }
+  .cost-table td {
+    padding: 8px 12px; color: var(--ink);
+    border-bottom: 1px solid var(--cloud-border);
+    white-space: nowrap;
+  }
+  .cost-table tr:hover td { background: rgba(240,216,204,0.15); }
+  .cost-total-row td {
+    border-top: 2px solid var(--peach-border);
+    border-bottom: none;
+    color: var(--ink); font-weight: 600;
+    background: var(--peach) !important;
+  }
+  .cost-grand td { background: #F0D0B8 !important; color: var(--gold); }
+  .cost-note {
+    margin-top: 12px; font-size: 11px;
+    color: var(--ink-soft); opacity: 0.65;
+    font-style: italic;
+  }
+  @media (max-width: 640px) {
+    .cost-toggle { padding: 14px 18px; font-size: 13px; }
+    .cost-body { padding: 0 12px 24px; }
+    .cost-table { font-size: 12px; }
+    .cost-table th { font-size: 9px; padding: 6px 8px; }
+    .cost-table td { padding: 7px 8px; white-space: normal; }
+    /* hide Route column on mobile — redundant */
+    .cost-table th:nth-child(3),
+    .cost-table td:nth-child(3) { display: none; }
+    /* price column right-aligned and bold */
+    .cost-table th:nth-child(5),
+    .cost-table td:nth-child(5) { text-align: right; font-weight: 600; }
+    /* total rows */
+    .cost-total-row td { padding: 8px; }
+  }
 </style>
 </head>
 <body>
@@ -770,6 +842,54 @@
 
 <!-- Main -->
 <div class="main" id="main"></div>
+
+<!-- Cost Summary -->
+<div class="cost-section">
+  <button class="cost-toggle" onclick="toggleCost()" aria-expanded="false">
+    <span>💰 Accommodation Cost Summary</span>
+    <span class="cost-arrow" id="cost-arrow">⌄</span>
+  </button>
+  <div class="cost-body" id="cost-body">
+    <table class="cost-table">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Date</th>
+          <th>Route</th>
+          <th>Accommodation</th>
+          <th>€/person</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>0</td><td>3/5</td><td>Arrive Porto</td><td>Nice Way Porto Hostel</td><td>€43</td></tr>
+        <tr><td>1</td><td>4/5</td><td>Porto → Vairão</td><td>Casa da Laura</td><td>€17</td></tr>
+        <tr><td>2</td><td>5/5</td><td>Vairão → Barcelos</td><td>Albergue Cidade de Barcelos</td><td>€5</td></tr>
+        <tr><td>3</td><td>6/5</td><td>Barcelos → Vitorino</td><td>Estábulo de Valinhas</td><td>€32</td></tr>
+        <tr><td>4</td><td>7/5</td><td>Vitorino → Ponte de Lima</td><td>Albergue Ponte de Lima</td><td>€5</td></tr>
+        <tr><td>5</td><td>8/5</td><td>Ponte de Lima → Rubiães</td><td>Albergue Ninho</td><td>€20</td></tr>
+        <tr><td>6</td><td>9/5</td><td>Rubiães → Tui</td><td>Jacobs Hostel</td><td>€16</td></tr>
+        <tr><td>7</td><td>10/5</td><td>Tui → O Porriño</td><td>Senda Sur</td><td>€20</td></tr>
+        <tr><td>8</td><td>11/5</td><td>O Porriño → Redondela</td><td>A Dársena do Francés</td><td>€25</td></tr>
+        <tr><td>9</td><td>12/5</td><td>Redondela → Pontevedra</td><td>Hostel Charino ⭐</td><td>€45</td></tr>
+        <tr><td>10</td><td>13/5</td><td>Pontevedra → Combarro</td><td>Casa Noelmar ⭐</td><td>€35</td></tr>
+        <tr><td>11</td><td>14/5</td><td>Combarro → Armenteira</td><td>A Fragua do Ferreiro</td><td>€27</td></tr>
+        <tr><td>12</td><td>15/5</td><td>Armenteira → Vilanova</td><td>A Salazón</td><td>€20</td></tr>
+        <tr><td>13</td><td>16/5</td><td>🚢 Vilanova → Padrón</td><td>O Lar de Romarís I</td><td>€36</td></tr>
+        <tr><td>14–15</td><td>17–18/5</td><td>Santiago (2 nights)</td><td>Hostal Nomade Santiago</td><td>€84</td></tr>
+        <tr><td>16–17</td><td>19–20/5</td><td>Porto (2 nights)</td><td>bnapartments Loftpuzzle</td><td>€68</td></tr>
+        <tr class="cost-total-row">
+          <td colspan="4"><strong>Total per person</strong></td>
+          <td><strong>€498</strong></td>
+        </tr>
+        <tr class="cost-total-row cost-grand">
+          <td colspan="4"><strong>Total for 3 pilgrims</strong></td>
+          <td><strong>€1,494</strong></td>
+        </tr>
+      </tbody>
+    </table>
+    <p class="cost-note">* Boat ticket (Day 13, La Barca del Peregrino) not yet booked — not included above.</p>
+  </div>
+</div>
 
 <footer>
   <strong>Camino Portugués 2026</strong> &nbsp;·&nbsp; 3 May – 21 May &nbsp;·&nbsp; 3 pilgrims &nbsp;·&nbsp; Bom Caminho! 🎉
@@ -1067,6 +1187,15 @@ document.fonts.ready.then(syncRouteWidth);
 window.addEventListener('resize', syncRouteWidth);
 window.addEventListener('orientationchange', () => setTimeout(syncRouteWidth, 200));
 syncRouteWidth();
+
+function toggleCost() {
+  const body  = document.getElementById('cost-body');
+  const arrow = document.getElementById('cost-arrow');
+  const btn   = document.querySelector('.cost-toggle');
+  const open  = body.classList.toggle('open');
+  arrow.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+}
 
 function toggleRouteExpand() {
   const block = document.getElementById('route-block');
