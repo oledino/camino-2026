@@ -140,15 +140,22 @@
     .sv-pilgrims { font-size: 6.5vw; }
     .sl-pilgrims { font-size: 2.4vw; }
     .hero-stats { justify-content: flex-start; }
-    .title-portugues { margin-bottom: 6.3vw; }
-    #route-block { font-size: 9px; text-align: right; }
-    /* collapse route to one line — same height as Portugués */
-    #route-block {
-      overflow: hidden;
-      max-height: 6.5vw;
-      transition: max-height 0.35s ease;
+    /* Portugués — larger and more prominent on mobile */
+    .title-portugues {
+      font-size: min(9vw, 52px);
+      margin-bottom: 6.3vw;
     }
-    #route-block.expanded { max-height: 30vw; }
+    /* route: use vw font so it stays consistent on rotation */
+    #route-block {
+      font-size: 2.4vw;
+      text-align: right;
+      overflow: hidden;
+      /* max-height matches one line: Portugués line-height = font-size * 1 */
+      max-height: min(9vw, 52px);
+      transition: max-height 0.35s ease;
+      line-height: 1.35;
+    }
+    #route-block.expanded { max-height: 50vw; }
     .lower-row { gap: 4px; }
   }
   /* expand arrow — mobile only */
@@ -159,7 +166,8 @@
       align-items: flex-start;
       background: none; border: none;
       color: var(--gold); opacity: 0.55;
-      font-size: 5vw; line-height: 1;
+      font-size: min(9vw, 52px);
+      line-height: 1;
       cursor: pointer;
       -webkit-tap-highlight-color: transparent;
       flex-shrink: 0;
@@ -1207,7 +1215,14 @@ function syncRouteWidth() {
 }
 document.fonts.ready.then(syncRouteWidth);
 window.addEventListener('resize', syncRouteWidth);
-window.addEventListener('orientationchange', () => setTimeout(syncRouteWidth, 200));
+window.addEventListener('orientationchange', () => {
+  // Collapse route on rotation so max-height recalculates cleanly
+  const block = document.getElementById('route-block');
+  const btn   = document.getElementById('route-toggle');
+  if (block) { block.classList.remove('expanded'); }
+  if (btn)   { btn.classList.remove('open'); btn.textContent = '⌄'; }
+  setTimeout(syncRouteWidth, 300);
+});
 syncRouteWidth();
 
 function toggleCost() {
