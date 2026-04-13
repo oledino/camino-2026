@@ -1049,7 +1049,7 @@ const data = [
     mapsUrl:"https://maps.app.goo.gl/evgv6YN1MozYgWFTA",
     cancel:"15/5",
     attraction:"🌊 Porto Return — Ribeira neighbourhood · Cais de Gaia wine lodges · Foz do Douro river mouth",
-    notes:"Coach Santiago → Porto (~3 hrs). Relax — no agenda tonight." },
+    notes:"Coach Santiago → Porto (~3 hrs). Relax — no agenda tonight.\n⚠️ Alsa bus booked — 19/5, 09:30–12:00 · €36 pp · Date changeable, not cancellable" },
 
   { seg:"return", day:"17", date:"20/5 Tue", route:"Porto — Free Day", km:"—",
     accom:"bnapartments Loftpuzzle (included)", backup:"—",
@@ -1160,12 +1160,12 @@ function renderCard(d) {
           <div class="detail-value">${d.ppp != null ? `<strong>€${d.ppp}</strong> per person<br><strong>€${d.ppp*3} total (×3)</strong>` : 'Included'}</div>
         </div>
         <div class="detail-block">
-          <div class="detail-label">Notes</div>
-          <div class="detail-value${isWarn ? ' warn' : ''}"><strong>${d.notes.replace(/\n/g,'<br>')}</strong></div>
-        </div>
-        <div class="detail-block">
           <div class="detail-label">Cancel By</div>
           <div class="detail-value"><span class="cancel-tag">${d.cancel}</span></div>
+        </div>
+        <div class="detail-block">
+          <div class="detail-label">Notes</div>
+          <div class="detail-value${isWarn ? ' warn' : ''}"><strong>${d.notes.replace(/\n/g,'<br>')}</strong></div>
         </div>
         <div class="attraction-block">
           <div class="detail-label">✦ Attraction / Highlight</div>
