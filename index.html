@@ -846,10 +846,32 @@
 <!-- Cost Summary -->
 <div class="cost-section">
   <button class="cost-toggle" onclick="toggleCost()" aria-expanded="false">
-    <span>💰 Accommodation Cost Summary</span>
+    <span>💰 Trip Cost Summary</span>
     <span class="cost-arrow" id="cost-arrow">⌄</span>
   </button>
   <div class="cost-body" id="cost-body">
+
+    <!-- Overview costs -->
+    <table class="cost-table" style="margin-bottom:20px">
+      <thead>
+        <tr><th colspan="2">Cost Overview — per person</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>✈️ Round-trip airfare</td><td style="text-align:right;font-weight:600">€270</td></tr>
+        <tr><td>🚌 One-way bus fare (Santiago → Porto)</td><td style="text-align:right;font-weight:600">€36</td></tr>
+        <tr><td>🏨 17-day accommodation (estimated)</td><td style="text-align:right;font-weight:600">€498</td></tr>
+        <tr class="cost-total-row">
+          <td><strong>Total per person</strong></td>
+          <td style="text-align:right"><strong>€804</strong></td>
+        </tr>
+        <tr class="cost-total-row cost-grand">
+          <td><strong>Total for 3 pilgrims</strong></td>
+          <td style="text-align:right"><strong>€2,412</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
+    <!-- Accommodation breakdown -->
     <table class="cost-table">
       <thead>
         <tr>
@@ -878,11 +900,11 @@
         <tr><td>14–15</td><td>17–18/5</td><td>Santiago (2 nights)</td><td>Hostal Nomade Santiago</td><td>€84</td></tr>
         <tr><td>16–17</td><td>19–20/5</td><td>Porto (2 nights)</td><td>bnapartments Loftpuzzle</td><td>€68</td></tr>
         <tr class="cost-total-row">
-          <td colspan="4"><strong>Total per person</strong></td>
+          <td colspan="4"><strong>Accommodation total per person</strong></td>
           <td><strong>€498</strong></td>
         </tr>
         <tr class="cost-total-row cost-grand">
-          <td colspan="4"><strong>Total for 3 pilgrims</strong></td>
+          <td colspan="4"><strong>Accommodation total for 3 pilgrims</strong></td>
           <td><strong>€1,494</strong></td>
         </tr>
       </tbody>
