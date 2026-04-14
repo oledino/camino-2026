@@ -778,12 +778,17 @@
     .cost-table { font-size: 12px; }
     .cost-table th { font-size: 9px; padding: 6px 8px; }
     .cost-table td { padding: 7px 8px; white-space: normal; }
-    /* hide Route column on mobile — redundant */
-    .cost-table th:nth-child(3),
-    .cost-table td:nth-child(3) { display: none; }
-    /* price column right-aligned and bold */
-    .cost-table th:nth-child(5),
-    .cost-table td:nth-child(5) { text-align: right; font-weight: 600; }
+    /* hide Route and cash-icon columns only on the accommodation breakdown table */
+    .cost-table:not(.cost-cash-table) th:nth-child(3),
+    .cost-table:not(.cost-cash-table) td:nth-child(3),
+    .cost-table:not(.cost-cash-table) th:nth-child(6),
+    .cost-table:not(.cost-cash-table) td:nth-child(6) { display: none; }
+    /* price column right-aligned and bold on accommodation table */
+    .cost-table:not(.cost-cash-table) th:nth-child(5),
+    .cost-table:not(.cost-cash-table) td:nth-child(5) { text-align: right; font-weight: 600; }
+    /* cash table: price column right-aligned */
+    .cost-cash-table th:nth-child(3),
+    .cost-cash-table td:nth-child(3) { text-align: right; font-weight: 600; }
     /* total rows */
     .cost-total-row td { padding: 8px; }
   }
@@ -879,6 +884,34 @@
       </tbody>
     </table>
 
+    <!-- Cash payments summary -->
+    <table class="cost-table cost-cash-table" style="margin-bottom:20px">
+      <thead>
+        <tr><th colspan="3">💵 Cash Payments Required</th></tr>
+        <tr>
+          <th>Day</th>
+          <th>Item</th>
+          <th>€/person</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1 — 4/5</td><td>Casa da Laura (accom)</td><td style="text-align:right">€17</td></tr>
+        <tr><td>3 — 6/5</td><td>Estábulo de Valinhas (accom)</td><td style="text-align:right">€32</td></tr>
+        <tr><td>5 — 8/5</td><td>Albergue Ninho (accom)</td><td style="text-align:right">€20</td></tr>
+        <tr><td>5 — 8/5</td><td>Dinner</td><td style="text-align:right">€15–18</td></tr>
+        <tr><td>6 — 9/5</td><td>Jacobs Hostel (accom)</td><td style="text-align:right">€16</td></tr>
+        <tr><td>12 — 15/5</td><td>A Salazón (accom)</td><td style="text-align:right">€20</td></tr>
+        <tr class="cost-total-row">
+          <td colspan="2"><strong>Cash total per person</strong> <span style="font-size:10px;font-weight:400;opacity:0.7">(estimated — other accommodation may also require cash)</span></td>
+          <td style="text-align:right"><strong>€120–123</strong></td>
+        </tr>
+        <tr class="cost-total-row cost-grand">
+          <td colspan="2"><strong>Cash total for 3 pilgrims</strong></td>
+          <td style="text-align:right"><strong>€360–369</strong></td>
+        </tr>
+      </tbody>
+    </table>
+
     <!-- Accommodation breakdown -->
     <table class="cost-table">
       <thead>
@@ -888,31 +921,32 @@
           <th>Route</th>
           <th>Accommodation</th>
           <th>€/person</th>
+          <th>💵</th>
         </tr>
       </thead>
       <tbody>
-        <tr><td>0</td><td>3/5</td><td>Arrive Porto</td><td>Nice Way Porto Hostel</td><td>€43</td></tr>
-        <tr><td>1</td><td>4/5</td><td>Porto → Vairão</td><td>Casa da Laura</td><td>€17</td></tr>
-        <tr><td>2</td><td>5/5</td><td>Vairão → Barcelos</td><td>Albergue Cidade de Barcelos</td><td>€5</td></tr>
-        <tr><td>3</td><td>6/5</td><td>Barcelos → Vitorino</td><td>Estábulo de Valinhas</td><td>€32</td></tr>
-        <tr><td>4</td><td>7/5</td><td>Vitorino → Ponte de Lima</td><td>Albergue Ponte de Lima</td><td>€5</td></tr>
-        <tr><td>5</td><td>8/5</td><td>Ponte de Lima → Rubiães</td><td>Albergue Ninho</td><td>€20</td></tr>
-        <tr><td>6</td><td>9/5</td><td>Rubiães → Tui</td><td>Jacobs Hostel</td><td>€16</td></tr>
-        <tr><td>7</td><td>10/5</td><td>Tui → O Porriño</td><td>Senda Sur</td><td>€20</td></tr>
-        <tr><td>8</td><td>11/5</td><td>O Porriño → Redondela</td><td>A Dársena do Francés</td><td>€25</td></tr>
-        <tr><td>9</td><td>12/5</td><td>Redondela → Pontevedra</td><td>Hostel Charino ⭐</td><td>€45</td></tr>
-        <tr><td>10</td><td>13/5</td><td>Pontevedra → Combarro</td><td>Casa Noelmar ⭐</td><td>€35</td></tr>
-        <tr><td>11</td><td>14/5</td><td>Combarro → Armenteira</td><td>A Fragua do Ferreiro</td><td>€27</td></tr>
-        <tr><td>12</td><td>15/5</td><td>Armenteira → Vilanova</td><td>A Salazón</td><td>€20</td></tr>
-        <tr><td>13</td><td>16/5</td><td>🚢 Vilanova → Padrón</td><td>Hotel Scala</td><td>€39</td></tr>
-        <tr><td>14–15</td><td>17–18/5</td><td>Santiago (2 nights)</td><td>Hostal Nomade Santiago</td><td>€84</td></tr>
-        <tr><td>16–17</td><td>19–20/5</td><td>Porto (2 nights)</td><td>bnapartments Loftpuzzle</td><td>€68</td></tr>
+        <tr><td>0</td><td>3/5</td><td>Arrive Porto</td><td>Nice Way Porto Hostel</td><td>€43</td><td></td></tr>
+        <tr><td>1</td><td>4/5</td><td>Porto → Vairão</td><td>Casa da Laura</td><td>€17</td><td style="text-align:center;color:var(--warn)">💵</td></tr>
+        <tr><td>2</td><td>5/5</td><td>Vairão → Barcelos</td><td>Albergue Cidade de Barcelos</td><td>€5</td><td></td></tr>
+        <tr><td>3</td><td>6/5</td><td>Barcelos → Vitorino</td><td>Estábulo de Valinhas</td><td>€32</td><td style="text-align:center;color:var(--warn)">💵</td></tr>
+        <tr><td>4</td><td>7/5</td><td>Vitorino → Ponte de Lima</td><td>Albergue Ponte de Lima</td><td>€5</td><td></td></tr>
+        <tr><td>5</td><td>8/5</td><td>Ponte de Lima → Rubiães</td><td>Albergue Ninho</td><td>€20</td><td style="text-align:center;color:var(--warn)">💵</td></tr>
+        <tr><td>6</td><td>9/5</td><td>Rubiães → Tui</td><td>Jacobs Hostel</td><td>€16</td><td style="text-align:center;color:var(--warn)">💵</td></tr>
+        <tr><td>7</td><td>10/5</td><td>Tui → O Porriño</td><td>Senda Sur</td><td>€20</td><td></td></tr>
+        <tr><td>8</td><td>11/5</td><td>O Porriño → Redondela</td><td>A Dársena do Francés</td><td>€25</td><td></td></tr>
+        <tr><td>9</td><td>12/5</td><td>Redondela → Pontevedra</td><td>Hostel Charino ⭐</td><td>€45</td><td></td></tr>
+        <tr><td>10</td><td>13/5</td><td>Pontevedra → Combarro</td><td>Casa Noelmar ⭐</td><td>€35</td><td></td></tr>
+        <tr><td>11</td><td>14/5</td><td>Combarro → Armenteira</td><td>A Fragua do Ferreiro</td><td>€27</td><td></td></tr>
+        <tr><td>12</td><td>15/5</td><td>Armenteira → Vilanova</td><td>A Salazón</td><td>€20</td><td style="text-align:center;color:var(--warn)">💵</td></tr>
+        <tr><td>13</td><td>16/5</td><td>🚢 Vilanova → Padrón</td><td>Hotel Scala</td><td>€39</td><td></td></tr>
+        <tr><td>14–15</td><td>17–18/5</td><td>Santiago (2 nights)</td><td>Hostal Nomade Santiago</td><td>€84</td><td></td></tr>
+        <tr><td>16–17</td><td>19–20/5</td><td>Porto (2 nights)</td><td>bnapartments Loftpuzzle</td><td>€68</td><td></td></tr>
         <tr class="cost-total-row">
-          <td colspan="4"><strong>Accommodation total per person</strong></td>
+          <td colspan="5"><strong>Accommodation total per person</strong></td>
           <td><strong>€501</strong></td>
         </tr>
         <tr class="cost-total-row cost-grand">
-          <td colspan="4"><strong>Accommodation total for 3 pilgrims</strong></td>
+          <td colspan="5"><strong>Accommodation total for 3 pilgrims</strong></td>
           <td><strong>€1,503</strong></td>
         </tr>
       </tbody>
